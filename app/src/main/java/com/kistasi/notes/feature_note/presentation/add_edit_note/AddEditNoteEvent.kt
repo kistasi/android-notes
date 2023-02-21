@@ -1,4 +1,4 @@
-package com.kistasi.notes.feature_note.presentation.add_edit_note.components
+package com.kistasi.notes.feature_note.presentation.add_edit_note
 
 import androidx.compose.ui.focus.FocusState
 

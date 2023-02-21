@@ -1,4 +1,4 @@
-package com.kistasi.notes.feature_note.presentation
+package com.kistasi.notes.feature_note.presentation.add_edit_note
 
 data class NoteTextFieldState(
     val text: String = "",

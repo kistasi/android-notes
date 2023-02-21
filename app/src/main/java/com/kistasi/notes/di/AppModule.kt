@@ -1,7 +1,6 @@
 package com.kistasi.notes.di
 
 import android.app.Application
-import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.room.Room
 import com.kistasi.notes.feature_note.data.data_source.NoteDatabase
 import com.kistasi.notes.feature_note.data.repository.NoteRepositoryImpl

@@ -1,26 +1,26 @@
-package com.kistasi.notes.feature_note.presentation.add_edit_note.components
+package com.kistasi.notes.feature_note.presentation.add_edit_note
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import com.kistasi.notes.feature_note.domain.use_case.NoteUseCases
-import com.kistasi.notes.feature_note.presentation.NoteTextFieldState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kistasi.notes.feature_note.domain.model.InvalidNoteException
 import com.kistasi.notes.feature_note.domain.model.Note
+import com.kistasi.notes.feature_note.domain.use_case.NoteUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
     private val _noteTitle = mutableStateOf(NoteTextFieldState(
         hint = "Enter title..."
     ))
@@ -50,8 +50,7 @@ class AddEditNoteViewModel @Inject constructor(
                             text = note.title,
                             isHintVisible = false
                         )
-
-                        _noteContent.value = noteContent.value.copy(
+                        _noteContent.value = _noteContent.value.copy(
                             text = note.content,
                             isHintVisible = false
                         )
@@ -78,21 +77,19 @@ class AddEditNoteViewModel @Inject constructor(
             }
 
             is AddEditNoteEvent.EnteredContent -> {
-                _noteContent.value = noteContent.value.copy(
+                _noteContent.value = _noteContent.value.copy(
                     text = event.value
                 )
             }
-
             is AddEditNoteEvent.ChangeContentFocus -> {
-                _noteContent.value = noteContent.value.copy(
-                    isHintVisible = !event.focusState.isFocused && noteContent.value.text.isBlank()
+                _noteContent.value = _noteContent.value.copy(
+                    isHintVisible = !event.focusState.isFocused &&
+                            _noteContent.value.text.isBlank()
                 )
             }
-
             is AddEditNoteEvent.ChangeColor -> {
                 _noteColor.value = event.color
             }
-
             is AddEditNoteEvent.SaveNote -> {
                 viewModelScope.launch {
                     try {

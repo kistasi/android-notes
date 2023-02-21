@@ -8,12 +8,14 @@ import com.kistasi.notes.feature_note.domain.model.Note
 import com.kistasi.notes.feature_note.domain.use_case.NoteUseCases
 import com.kistasi.notes.feature_note.domain.util.NoteOrder
 import com.kistasi.notes.feature_note.domain.util.OrderType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class NotesViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {
@@ -36,7 +38,7 @@ class NotesViewModel @Inject constructor(
                     state.value.noteOrder::class == event.noteOrder::class
                     && state.value.noteOrder.orderType === event.noteOrder.orderType
                 ) {
-                    return;
+                    return
                 }
 
                 getNotes(event.noteOrder)
@@ -55,10 +57,9 @@ class NotesViewModel @Inject constructor(
                     recentlyDeletedNote = null
                 }
             }
-
             is NotesEvent.ToggleOrderSection -> {
                 _state.value = state.value.copy(
-                    isOrderSectionVisible = !_state.value.isOrderSectionVisible
+                    isOrderSectionVisible = !state.value.isOrderSectionVisible
                 )
             }
         }

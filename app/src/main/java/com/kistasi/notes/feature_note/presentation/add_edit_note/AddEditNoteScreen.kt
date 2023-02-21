@@ -1,4 +1,4 @@
-package com.kistasi.notes.feature_note.presentation.add_edit_note.components
+package com.kistasi.notes.feature_note.presentation.add_edit_note
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.kistasi.notes.feature_note.domain.model.Note
+import com.kistasi.notes.feature_note.presentation.add_edit_note.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -42,18 +43,16 @@ fun AddEditNoteScreen(
             Color(if (noteColor != -1) noteColor else viewModel.noteColor.value)
         )
     }
-
     val scope = rememberCoroutineScope()
-    
+
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
-            when (event) {
+            when(event) {
                 is AddEditNoteViewModel.UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message
                     )
                 }
-
                 is AddEditNoteViewModel.UiEvent.SaveNote -> {
                     navController.navigateUp()
                 }
@@ -84,11 +83,10 @@ fun AddEditNoteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Note.noteColors.forEach { color ->
                     val colorInt = color.toArgb()
-                    
                     Box(
                         modifier = Modifier
                             .size(50.dp)
@@ -100,7 +98,7 @@ fun AddEditNoteScreen(
                                 color = if (viewModel.noteColor.value == colorInt) {
                                     Color.Black
                                 } else Color.Transparent,
-                                shape = CircleShape,
+                                shape = CircleShape
                             )
                             .clickable {
                                 scope.launch {
@@ -116,9 +114,7 @@ fun AddEditNoteScreen(
                     )
                 }
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
             TransparentHintTextField(
                 text = titleState.text,
                 hint = titleState.hint,
@@ -130,11 +126,9 @@ fun AddEditNoteScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h6
+                textStyle = MaterialTheme.typography.h5
             )
-
             Spacer(modifier = Modifier.height(16.dp))
-
             TransparentHintTextField(
                 text = contentState.text,
                 hint = contentState.hint,
